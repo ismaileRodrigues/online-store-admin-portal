@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
 let products = [];
 
 function loadProducts() {
-    fetch('http://localhost:3000/api/products')
+    fetch('https://online-store-admin-portal.vercel.app/api/products')
         .then(response => response.json())
         .then(data => {
             products = data;
