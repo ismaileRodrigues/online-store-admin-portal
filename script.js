@@ -56,7 +56,7 @@ function addProduct() {
 }
 
 function deleteProduct(id) {
-    fetch(`http://localhost:3000/api/products/${id}`, {
+    fetch(`https://online-store-backend-vw45.onrender.com/api/products/${id}`, {
         method: 'DELETE'
     })
     .then(() => {
@@ -66,4 +66,5 @@ function deleteProduct(id) {
     .catch(error => {
         console.error('Erro ao excluir produto:', error);
     });
+
 }
