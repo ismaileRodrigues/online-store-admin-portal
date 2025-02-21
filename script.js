@@ -40,7 +40,7 @@ function addProduct() {
     formData.append('price', document.getElementById('productPrice').value);
     formData.append('image', document.getElementById('productImage').files[0]);
 
-    fetch('http://localhost:3000/api/products', {
+    fetch('https://online-store-backend-vw45.onrender.com/api/products', {
         method: 'POST',
         body: formData
     })
