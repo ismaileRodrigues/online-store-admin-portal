@@ -25,7 +25,7 @@ function renderProducts() {
         const productElement = document.createElement('div');
         productElement.classList.add('product');
         productElement.innerHTML = `
-            <img src="http://localhost:3000${product.image}" alt="${product.name}">
+            <img src="https://online-store-backend-vw45.onrender.com${product.image}" alt="${product.name}">
             <h3>${product.name}</h3>
             <p>Preço: R$ ${product.price.toFixed(2)}</p>
             <button onclick="deleteProduct(${product.id})">Excluir Produto</button>
