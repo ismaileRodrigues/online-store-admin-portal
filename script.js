@@ -28,6 +28,7 @@ function renderProducts() {
         productElement.innerHTML = `
             <img src="https://online-store-backend-vw45.onrender.com${product.image}" alt="${product.name}">
             <h3>${product.name}</h3>
+            <p>${product.description}</p>
             <p>Preço: R$ ${product.price.toFixed(2)}</p>
             <button onclick="deleteProduct(${product.id})">Excluir Produto</button>
         `;
@@ -38,6 +39,7 @@ function renderProducts() {
 function addProduct() {
     const formData = new FormData();
     formData.append('name', document.getElementById('productName').value);
+    formData.append('description', document.getElementById('productDescription').value);
     formData.append('price', document.getElementById('productPrice').value);
     formData.append('image', document.getElementById('productImage').files[0]);
 
