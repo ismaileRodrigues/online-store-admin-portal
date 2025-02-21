@@ -11,12 +11,7 @@ let products = [];
 
 function loadProducts() {
     fetch('https://online-store-backend-vw45.onrender.com/api/products')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
+        .then(response => response.json())
         .then(data => {
             products = data;
             renderProducts();
@@ -50,12 +45,7 @@ function addProduct() {
         method: 'POST',
         body: formData
     })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
+    .then(response => response.json())
     .then(product => {
         products.push(product);
         renderProducts();
