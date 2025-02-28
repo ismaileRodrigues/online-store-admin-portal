@@ -9,14 +9,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
 let products = [];
 
+function displayError(message) {
+    const errorElement = document.getElementById('error');
+    errorElement.textContent = message;
+    errorElement.style.display = 'block';
+}
+
+function hideError() {
+    const errorElement = document.getElementById('error');
+    errorElement.style.display = 'none';
+}
+
 function loadProducts() {
-    fetch('https://online-store-backend-vw45.onrender.com/api/products')
-        .then(response => response.json())
-        .then(data => {
-            products = data;
-            renderProducts();
-        })
-        .catch(error => console.error('Error loading products:', error));
+    fetch('https://online-store-backend-vw45.onrender.com/api/products', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    })
+    .then(response => {
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        return response.json();
+    })
+    .then(data => {
+        products = data;
+        renderProducts();
+        hideError(); // Oculta qualquer erro anterior ao carregar com sucesso
+    })
+    .catch(error => {
+        console.error('Error loading products:', error);
+        displayError('Erro ao carregar produtos. Tente novamente mais tarde.');
+    });
 }
 
 function renderProducts() {
@@ -45,28 +68,36 @@ function addProduct() {
 
     fetch('https://online-store-backend-vw45.onrender.com/api/products', {
         method: 'POST',
-        body: formData
+        body: formData,
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        return response.json();
+    })
     .then(product => {
         products.push(product);
         renderProducts();
         document.getElementById('addProductForm').reset();
+        hideError(); // Oculta erros ao adicionar com sucesso
     })
     .catch(error => {
         console.error('Erro ao adicionar produto:', error);
+        displayError('Erro ao adicionar o produto. Verifique os dados e tente novamente.');
     });
 }
 
 function deleteProduct(id) {
     fetch(`https://online-store-backend-vw45.onrender.com/api/products/${id}`, {
-        method: 'DELETE'
+        method: 'DELETE',
     })
-    .then(() => {
+    .then(response => {
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         products = products.filter(product => product.id !== id);
         renderProducts();
+        hideError(); // Oculta erros ao excluir com sucesso
     })
     .catch(error => {
         console.error('Erro ao excluir produto:', error);
+        displayError('Erro ao excluir o produto. Tente novamente.');
     });
 }
