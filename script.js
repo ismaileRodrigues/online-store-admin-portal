@@ -47,7 +47,7 @@ function renderProducts() {
     productsContainer.innerHTML = '';
     products.forEach((product) => {
         console.log('Rendering product:', product); // Adicione este log
-        const imageUrl = product.image.URL; // Ajuste conforme a estrutura do objeto
+        const imageUrl = product.image; // A URL da imagem está diretamente no campo 'image'
         console.log('Image URL:', imageUrl); // Adicione este log
         const productElement = document.createElement('div');
         productElement.classList.add('product');
