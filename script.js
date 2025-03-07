@@ -46,11 +46,13 @@ function renderProducts() {
     const productsContainer = document.getElementById('products');
     productsContainer.innerHTML = '';
     products.forEach((product) => {
-        console.log('Rendering product:', product);
+        console.log('Rendering product:', product); // Adicione este log
+        const imageUrl = product.image.URL; // Ajuste conforme a estrutura do objeto
+        console.log('Image URL:', imageUrl); // Adicione este log
         const productElement = document.createElement('div');
         productElement.classList.add('product');
         productElement.innerHTML = `
-            <img src="${product.image}" alt="${product.name}">
+            <img src="${imageUrl}" alt="${product.name}">
             <h3>${product.name}</h3>
             <p>${product.description}</p>
             <p>Preço: R$ ${product.price.toFixed(2)}</p>
@@ -59,6 +61,7 @@ function renderProducts() {
         productsContainer.appendChild(productElement);
     });
 }
+
 
 function addProduct() {
     const formData = new FormData();
