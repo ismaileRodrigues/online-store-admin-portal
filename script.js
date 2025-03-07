@@ -46,6 +46,7 @@ function renderProducts() {
     const productsContainer = document.getElementById('products');
     productsContainer.innerHTML = '';
     products.forEach((product) => {
+        console.log('Rendering product:', product);
         const productElement = document.createElement('div');
         productElement.classList.add('product');
         productElement.innerHTML = `
