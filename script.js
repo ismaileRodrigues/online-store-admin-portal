@@ -34,7 +34,7 @@ function loadProducts() {
     .then(data => {
         products = data;
         renderProducts();
-        hideError(); // Oculta qualquer erro anterior ao carregar com sucesso
+        hideError();
     })
     .catch(error => {
         console.error('Error loading products:', error);
@@ -46,9 +46,9 @@ function renderProducts() {
     const productsContainer = document.getElementById('products');
     productsContainer.innerHTML = '';
     products.forEach((product) => {
-        console.log('Rendering product:', product); // Adicione este log
-        const imageUrl = product.image; // A URL da imagem está diretamente no campo 'image'
-        console.log('Image URL:', imageUrl); // Adicione este log
+        console.log('Rendering product:', product);
+        const imageUrl = product.image;
+        console.log('Image URL:', imageUrl);
         const productElement = document.createElement('div');
         productElement.classList.add('product');
         productElement.innerHTML = `
@@ -56,7 +56,7 @@ function renderProducts() {
             <h3>${product.name}</h3>
             <p>${product.description}</p>
             <p>Preço: R$ ${product.price.toFixed(2)}</p>
-            <button onclick="deleteProduct(${product._id})">Excluir Produto</button>
+            <button onclick="confirmDeleteProduct(${product._id})">Excluir Produto</button>
         `;
         productsContainer.appendChild(productElement);
     });
@@ -81,7 +81,7 @@ function addProduct() {
         products.push(product);
         renderProducts();
         document.getElementById('addProductForm').reset();
-        hideError(); // Oculta erros ao adicionar com sucesso
+        hideError();
     })
     .catch(error => {
         console.error('Erro ao adicionar produto:', error);
@@ -89,7 +89,14 @@ function addProduct() {
     });
 }
 
+function confirmDeleteProduct(id) {
+    if (confirm('Tem certeza que deseja excluir este produto?')) {
+        deleteProduct(id);
+    }
+}
+
 function deleteProduct(id) {
+    console.log('Deleting product with ID:', id);
     fetch(`https://online-store-backend-vw45.onrender.com/api/products/${id}`, {
         method: 'DELETE',
     })
@@ -97,10 +104,122 @@ function deleteProduct(id) {
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         products = products.filter(product => product._id !== id);
         renderProducts();
-        hideError(); // Oculta erros ao excluir com sucesso
+        hideError();
     })
     .catch(error => {
         console.error('Erro ao excluir produto:', error);
         displayError('Erro ao excluir o produto. Tente novamente.');
     });
 }
+
+
+
+
+// document.addEventListener('DOMContentLoaded', () => {
+//     loadProducts();
+
+//     document.getElementById('addProductForm').addEventListener('submit', (event) => {
+//         event.preventDefault();
+//         addProduct();
+//     });
+// });
+
+// let products = [];
+
+// function displayError(message) {
+//     const errorElement = document.getElementById('error');
+//     errorElement.textContent = message;
+//     errorElement.style.display = 'block';
+// }
+
+// function hideError() {
+//     const errorElement = document.getElementById('error');
+//     errorElement.style.display = 'none';
+// }
+
+// function loadProducts() {
+//     fetch('https://online-store-backend-vw45.onrender.com/api/products', {
+//         method: 'GET',
+//         headers: {
+//             'Content-Type': 'application/json',
+//         }
+//     })
+//     .then(response => {
+//         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+//         return response.json();
+//     })
+//     .then(data => {
+//         products = data;
+//         renderProducts();
+//         hideError(); // Oculta qualquer erro anterior ao carregar com sucesso
+//     })
+//     .catch(error => {
+//         console.error('Error loading products:', error);
+//         displayError('Erro ao carregar produtos. Tente novamente mais tarde.');
+//     });
+// }
+
+// function renderProducts() {
+//     const productsContainer = document.getElementById('products');
+//     productsContainer.innerHTML = '';
+//     products.forEach((product) => {
+//         console.log('Rendering product:', product); // Adicione este log
+//         const imageUrl = product.image; // A URL da imagem está diretamente no campo 'image'
+//         console.log('Image URL:', imageUrl); // Adicione este log
+//         const productElement = document.createElement('div');
+//         productElement.classList.add('product');
+//         productElement.innerHTML = `
+//             <img src="${imageUrl}" alt="${product.name}">
+//             <h3>${product.name}</h3>
+//             <p>${product.description}</p>
+//             <p>Preço: R$ ${product.price.toFixed(2)}</p>
+//             <button onclick="deleteProduct(${product._id})">Excluir Produto</button>
+//         `;
+//         productsContainer.appendChild(productElement);
+//     });
+// }
+
+// function addProduct() {
+//     const formData = new FormData();
+//     formData.append('name', document.getElementById('productName').value);
+//     formData.append('description', document.getElementById('productDescription').value);
+//     formData.append('price', document.getElementById('productPrice').value);
+//     formData.append('image', document.getElementById('productImage').files[0]);
+
+//     fetch('https://online-store-backend-vw45.onrender.com/api/products', {
+//         method: 'POST',
+//         body: formData,
+//     })
+//     .then(response => {
+//         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+//         return response.json();
+//     })
+//     .then(product => {
+//         products.push(product);
+//         renderProducts();
+//         document.getElementById('addProductForm').reset();
+//         hideError(); // Oculta erros ao adicionar com sucesso
+//     })
+//     .catch(error => {
+//         console.error('Erro ao adicionar produto:', error);
+//         displayError('Erro ao adicionar o produto. Verifique os dados e tente novamente.');
+//     });
+// }
+
+// function deleteProduct(id) {
+//     fetch(`https://online-store-backend-vw45.onrender.com/api/products/${id}`, {
+//         method: 'DELETE',
+//     })
+//     .then(response => {
+//         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+//         products = products.filter(product => product._id !== id);
+//         renderProducts();
+//         hideError(); // Oculta erros ao excluir com sucesso
+//     })
+//     .catch(error => {
+//         console.error('Erro ao excluir produto:', error);
+//         displayError('Erro ao excluir o produto. Tente novamente.');
+//     });
+// }
+
+
