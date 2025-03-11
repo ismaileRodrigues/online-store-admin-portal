@@ -56,7 +56,7 @@ function renderProducts() {
             <h3>${product.name}</h3>
             <p>${product.description}</p>
             <p>Preço: R$ ${product.price.toFixed(2)}</p>
-            <button onclick="confirmDeleteProduct(${product._id})">Excluir Produto</button>
+            <button onclick="confirmDeleteProduct('${product._id}')">Excluir Produto</button>
         `;
         productsContainer.appendChild(productElement);
     });
@@ -111,7 +111,6 @@ function deleteProduct(id) {
         displayError('Erro ao excluir o produto. Tente novamente.');
     });
 }
-
 
 
 
