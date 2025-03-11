@@ -79,7 +79,8 @@ button:hover {
     font-weight: bold;
 }
 
-.add-product-form input {
+.add-product-form input,
+.add-product-form textarea {
     width: 100%;
     padding: 10px;
     margin-bottom: 15px;
@@ -111,4 +112,29 @@ button:hover {
 .cart h2 {
     font-size: 18px;
     margin-bottom: 10px;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+    .container {
+        padding: 10px;
+    }
+
+    .product img {
+        height: auto;
+    }
+
+    button, .add-product-form button {
+        font-size: 12px;
+        padding: 8px;
+    }
+
+    .add-product-form input, .add-product-form textarea {
+        font-size: 12px;
+        padding: 8px;
+    }
 }
