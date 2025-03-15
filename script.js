@@ -20,7 +20,22 @@ function hideError() {
     errorElement.style.display = 'none';
 }
 
+function showLoading() {
+    const loadingElement = document.getElementById('loading');
+    if (loadingElement) {
+        loadingElement.style.display = 'flex'; // Mostrar o loader
+    }
+}
+
+function hideLoading() {
+    const loadingElement = document.getElementById('loading');
+    if (loadingElement) {
+        loadingElement.style.display = 'none'; // Ocultar o loader
+    }
+}
+
 function loadProducts() {
+    showLoading(); // Mostrar o loader antes de carregar os produtos
     fetch('https://online-store-backend-vw45.onrender.com/api/products', {
         method: 'GET',
         headers: {
@@ -39,6 +54,9 @@ function loadProducts() {
     .catch(error => {
         console.error('Error loading products:', error);
         displayError('Erro ao carregar produtos. Tente novamente mais tarde.');
+    })
+    .finally(() => {
+        hideLoading(); // Ocultar o loader após carregar os produtos
     });
 }
 
@@ -63,6 +81,7 @@ function renderProducts() {
 }
 
 function addProduct() {
+    showLoading(); // Mostrar o loader antes de adicionar o produto
     const formData = new FormData();
     formData.append('name', document.getElementById('productName').value);
     formData.append('description', document.getElementById('productDescription').value);
@@ -86,6 +105,9 @@ function addProduct() {
     .catch(error => {
         console.error('Erro ao adicionar produto:', error);
         displayError('Erro ao adicionar o produto. Verifique os dados e tente novamente.');
+    })
+    .finally(() => {
+        hideLoading(); // Ocultar o loader após adicionar o produto
     });
 }
 
@@ -96,6 +118,7 @@ function confirmDeleteProduct(id) {
 }
 
 function deleteProduct(id) {
+    showLoading(); // Mostrar o loader antes de excluir o produto
     console.log('Deleting product with ID:', id);
     fetch(`https://online-store-backend-vw45.onrender.com/api/products/${id}`, {
         method: 'DELETE',
@@ -109,5 +132,8 @@ function deleteProduct(id) {
     .catch(error => {
         console.error('Erro ao excluir produto:', error);
         displayError('Erro ao excluir o produto. Tente novamente.');
+    })
+    .finally(() => {
+        hideLoading(); // Ocultar o loader após excluir o produto
     });
 }
