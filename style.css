@@ -1,8 +1,8 @@
 /* Estilos gerais */
 body {
-    font-family: 'Arial', sans-serif; /* Fonte limpa e moderna */
+    font-family: 'Arial', sans-serif;
     padding: 20px;
-    background-color: #f8f8f8; /* Fundo claro típico do iFood */
+    background-color: #f8f8f8;
     color: #333;
 }
 
@@ -30,7 +30,7 @@ body {
     content: "";
     width: 40px;
     height: 40px;
-    border: 5px solid #e4002b; /* Vermelho iFood */
+    border: 5px solid #e4002b;
     border-top: 5px solid transparent;
     border-radius: 50%;
     animation: spin 1s linear infinite;
@@ -46,8 +46,8 @@ body {
     margin: 0 auto;
     background: #fff;
     padding: 20px;
-    border-radius: 12px; /* Bordas arredondadas */
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 /* Ajuste para telas menores */
@@ -61,12 +61,11 @@ body {
 h1 {
     text-align: center;
     font-size: 2em;
-    color: #e4002b; /* Vermelho iFood */
+    color: #e4002b;
     margin-top: 55px;
     margin-bottom: 20px;
 }
 
-/* Ajuste para telas menores */
 @media (max-width: 768px) {
     h1 {
         font-size: 1.8em;
@@ -81,7 +80,6 @@ h2 {
     font-weight: 600;
 }
 
-/* Ajuste para telas menores */
 @media (max-width: 768px) {
     h2 {
         font-size: 1.3em;
@@ -113,7 +111,6 @@ input[type="file"] {
     box-sizing: border-box;
 }
 
-/* Ajuste para telas menores */
 @media (max-width: 480px) {
     input[type="text"],
     input[type="number"],
@@ -127,10 +124,10 @@ input[type="file"] {
 
 button {
     padding: 12px 20px;
-    background-color: #e4002b; /* Vermelho iFood */
+    background-color: #e4002b;
     color: #fff;
     border: none;
-    border-radius: 20px; /* Botões arredondados */
+    border-radius: 20px;
     cursor: pointer;
     font-weight: bold;
     font-size: 14px;
@@ -139,11 +136,10 @@ button {
 }
 
 button:hover {
-    background-color: #c20023; /* Tom mais escuro no hover */
-    transform: translateY(-2px); /* Efeito de elevação */
+    background-color: #c20023;
+    transform: translateY(-2px);
 }
 
-/* Ajuste para telas menores */
 @media (max-width: 480px) {
     button {
         padding: 10px 15px;
@@ -193,7 +189,6 @@ button:hover {
     margin-top: 20px;
 }
 
-/* Ajuste para telas menores */
 @media (max-width: 480px) {
     .products {
         grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -201,46 +196,63 @@ button:hover {
     }
 }
 
+.category {
+    margin-bottom: 20px;
+}
+
+.category h3 {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 10px;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
 .product {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     background: #fff;
     border-radius: 12px;
     padding: 15px;
     text-align: center;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
+    min-height: 350px; /* Altura mínima para consistência */
 }
 
 .product:hover {
-    transform: scale(1.03); /* Efeito sutil de zoom */
+    transform: scale(1.03);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .product img {
-    max-width: 100%;
+    width: 100%;
     height: 150px;
     border-radius: 8px;
     object-fit: cover;
     margin-bottom: 10px;
 }
 
-/* Ajuste para telas menores */
 @media (max-width: 480px) {
     .product img {
         height: 120px;
     }
 }
 
-.product h3 {
+.product h4 {
     font-size: 16px;
     color: #333;
     margin: 10px 0 5px;
     font-weight: 600;
+    flex-grow: 1; /* Garante que o título ocupe espaço */
 }
 
 .product p {
     font-size: 14px;
     color: #666;
-    margin-bottom: 10px;
+    margin: 5px 0;
+    flex-grow: 1; /* Garante que a descrição ocupe espaço */
 }
 
 .product button {
@@ -248,6 +260,7 @@ button:hover {
     background-color: #e4002b;
     color: #fff;
     font-weight: bold;
+    margin-top: auto; /* Botão sempre no final */
 }
 
 .product button:hover {
@@ -256,7 +269,7 @@ button:hover {
 
 #error {
     display: none;
-    color: #e4002b; /* Vermelho iFood para erros */
+    color: #e4002b;
     margin-top: 10px;
     text-align: center;
     font-weight: bold;
