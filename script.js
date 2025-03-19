@@ -138,9 +138,9 @@ function renderProducts() {
             productDiv.classList.add('product');
             productDiv.innerHTML = `
                 <h4>${product.name}</h4>
-                <p>${product.description}</p>
-                <p>Preço: R$ ${product.price.toFixed(2)}</p>
                 <img src="${product.image}" alt="${product.name}" class="product-image">
+                <p>${product.description}</p>
+                 <p>Preço: R$ ${product.price.toFixed(2)}</p>
                 <button onclick="confirmDeleteProduct('${product._id}')">Excluir Produto</button>
             `;
             categoryDiv.appendChild(productDiv);
