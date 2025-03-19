@@ -235,6 +235,7 @@ button:hover {
     border-radius: 8px;
     object-fit: cover;
     margin-bottom: 10px;
+    margin:auto;
 }
 
 @media (max-width: 480px) {
