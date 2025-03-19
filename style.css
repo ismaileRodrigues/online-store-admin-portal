@@ -239,7 +239,8 @@ button:hover {
 
 @media (max-width: 480px) {
     .category .product img {
-        height: 120px;
+        width:250px
+        height: 250pxx;
     }
 }
 
