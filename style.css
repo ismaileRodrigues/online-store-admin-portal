@@ -241,6 +241,7 @@ button:hover {
     .category .product img {
         width:250px
         height: 250pxx;
+        margin:auto;
     }
 }
 
