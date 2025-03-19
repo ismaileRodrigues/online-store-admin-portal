@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-     <div id="loading" class="loading">Loading...</div>
+    <div id="loading" class="loading">Loading...</div>
 
     <div class="container">
         <h1>Portal Administrativo</h1>
@@ -25,8 +25,23 @@
                 <input type="number" id="productPrice" step="0.01" required>
                 <label for="productImage">Imagem do Produto:</label>
                 <input type="file" id="productImage" accept="image/*" required>
+                <label for="productCategory">Categoria do Produto:</label>
+                <select id="productCategory" required>
+                    <!-- As opções serão adicionadas dinamicamente -->
+                </select>
                 <button type="submit">Adicionar Produto</button>
             </form>
+        </div>
+
+        <!-- Formulário para gerenciar categorias -->
+        <div class="manage-categories-form">
+            <h2>Gerenciar Categorias</h2>
+            <form id="manageCategoriesForm">
+                <label for="newCategoryName">Nova Categoria:</label>
+                <input type="text" id="newCategoryName">
+                <button type="button" onclick="addCategory()">Adicionar Categoria</button>
+            </form>
+            <div id="categoriesList"></div>
         </div>
 
         <div class="products" id="products"></div>
