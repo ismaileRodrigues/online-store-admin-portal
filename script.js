@@ -1,10 +1,11 @@
-document.addEventListener('DOMContentLoaded', () => {
-    loadProducts();
-    loadCategories();
+document.addEventListener('DOMContentLoaded', async () => {
+    showLoading();
+    await Promise.all([loadProducts(), loadCategories()]);
+    hideLoading();
 
-    document.getElementById('addProductForm').addEventListener('submit', (event) => {
+    document.getElementById('addProductForm').addEventListener('submit', async (event) => {
         event.preventDefault();
-        addProduct();
+        await addProduct();
     });
 });
 
@@ -36,57 +37,41 @@ function hideLoading() {
     }
 }
 
-function loadProducts() {
-    showLoading();
-    fetch('https://online-store-backend-vw45.onrender.com/api/products', {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-        }
-    })
-    .then(response => {
+async function loadProducts() {
+    try {
+        const response = await fetch('https://online-store-backend-vw45.onrender.com/api/products', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-        return response.json();
-    })
-    .then(data => {
-        products = data;
+        products = await response.json();
         renderProducts();
         hideError();
-    })
-    .catch(error => {
+    } catch (error) {
         console.error('Error loading products:', error);
         displayError('Erro ao carregar produtos. Tente novamente mais tarde.');
-    })
-    .finally(() => {
-        hideLoading();
-    });
+    }
 }
 
-function loadCategories() {
-    showLoading();
-    fetch('https://online-store-backend-vw45.onrender.com/api/categories', {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-        }
-    })
-    .then(response => {
+async function loadCategories() {
+    try {
+        const response = await fetch('https://online-store-backend-vw45.onrender.com/api/categories', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-        return response.json();
-    })
-    .then(data => {
-        categories = data;
+        categories = await response.json();
         updateCategoryOptions();
         displayCategories();
         hideError();
-    })
-    .catch(error => {
+    } catch (error) {
         console.error('Error loading categories:', error);
         displayError('Erro ao carregar categorias. Tente novamente mais tarde.');
-    })
-    .finally(() => {
-        hideLoading();
-    });
+    }
 }
 
 function updateCategoryOptions() {
@@ -140,7 +125,7 @@ function renderProducts() {
                 <h4>${product.name}</h4>
                 <img src="${product.image}" alt="${product.name}" class="product-image">
                 <p>${product.description}</p>
-                 <p>Preço: R$ ${product.price.toFixed(2)}</p>
+                <p>Preço: R$ ${product.price.toFixed(2)}</p>
                 <button onclick="confirmDeleteProduct('${product._id}')">Excluir Produto</button>
             `;
             categoryDiv.appendChild(productDiv);
@@ -148,7 +133,7 @@ function renderProducts() {
     });
 }
 
-function addProduct() {
+async function addProduct() {
     showLoading();
     const formData = new FormData();
     formData.append('name', document.getElementById('productName').value);
@@ -157,56 +142,50 @@ function addProduct() {
     formData.append('image', document.getElementById('productImage').files[0]);
     formData.append('category', document.getElementById('productCategory').value);
 
-    fetch('https://online-store-backend-vw45.onrender.com/api/products', {
-        method: 'POST',
-        body: formData,
-    })
-    .then(response => {
+    try {
+        const response = await fetch('https://online-store-backend-vw45.onrender.com/api/products', {
+            method: 'POST',
+            body: formData,
+        });
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-        return response.json();
-    })
-    .then(product => {
+        const product = await response.json();
         products.push(product);
         renderProducts();
         document.getElementById('addProductForm').reset();
         hideError();
-    })
-    .catch(error => {
+    } catch (error) {
         console.error('Erro ao adicionar produto:', error);
         displayError('Erro ao adicionar o produto. Verifique os dados e tente novamente.');
-    })
-    .finally(() => {
+    } finally {
         hideLoading();
-    });
-}
-
-function confirmDeleteProduct(id) {
-    if (confirm('Tem certeza que deseja excluir este produto?')) {
-        deleteProduct(id);
     }
 }
 
-function deleteProduct(id) {
+async function confirmDeleteProduct(id) {
+    if (confirm('Tem certeza que deseja excluir este produto?')) {
+        await deleteProduct(id);
+    }
+}
+
+async function deleteProduct(id) {
     showLoading();
-    fetch(`https://online-store-backend-vw45.onrender.com/api/products/${id}`, {
-        method: 'DELETE',
-    })
-    .then(response => {
+    try {
+        const response = await fetch(`https://online-store-backend-vw45.onrender.com/api/products/${id}`, {
+            method: 'DELETE',
+        });
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         products = products.filter(product => product._id !== id);
         renderProducts();
         hideError();
-    })
-    .catch(error => {
+    } catch (error) {
         console.error('Erro ao excluir produto:', error);
         displayError('Erro ao excluir o produto. Tente novamente.');
-    })
-    .finally(() => {
+    } finally {
         hideLoading();
-    });
+    }
 }
 
-function addCategory() {
+async function addCategory() {
     showLoading();
     const newCategoryName = document.getElementById('newCategoryName').value.trim();
     if (!newCategoryName) {
@@ -214,38 +193,33 @@ function addCategory() {
         return displayError('Por favor, insira o nome da categoria.');
     }
 
-    fetch('https://online-store-backend-vw45.onrender.com/api/categories', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ name: newCategoryName })
-    })
-    .then(response => {
+    try {
+        const response = await fetch('https://online-store-backend-vw45.onrender.com/api/categories', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ name: newCategoryName })
+        });
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-        return response.json();
-    })
-    .then(() => {
-        loadCategories(); // Recarrega a lista de categorias
+        await loadCategories(); // Recarrega a lista de categorias
         document.getElementById('manageCategoriesForm').reset();
         hideError();
-    })
-    .catch(error => {
+    } catch (error) {
         console.error('Erro ao adicionar categoria:', error);
         displayError(error.message.includes('já existe') ? 'Esta categoria já existe.' : 'Erro ao adicionar categoria.');
-    })
-    .finally(() => {
+    } finally {
         hideLoading();
-    });
+    }
 }
 
-function removeCategory(category) {
+async function removeCategory(category) {
     if (confirm('Tem certeza que deseja remover esta categoria? Isso afetará os produtos associados.')) {
         showLoading();
-        fetch(`https://online-store-backend-vw45.onrender.com/api/categories/${category}`, {
-            method: 'DELETE',
-        })
-        .then(response => {
+        try {
+            const response = await fetch(`https://online-store-backend-vw45.onrender.com/api/categories/${category}`, {
+                method: 'DELETE',
+            });
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             products = products.map(product => {
                 if (product.category === category) {
@@ -253,16 +227,14 @@ function removeCategory(category) {
                 }
                 return product;
             });
-            loadCategories(); // Recarrega a lista de categorias
+            await loadCategories(); // Recarrega a lista de categorias
             renderProducts();
             hideError();
-        })
-        .catch(error => {
+        } catch (error) {
             console.error('Erro ao remover categoria:', error);
             displayError('Erro ao remover categoria.');
-        })
-        .finally(() => {
+        } finally {
             hideLoading();
-        });
+        }
     }
 }
