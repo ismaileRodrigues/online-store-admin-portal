@@ -5,22 +5,40 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const toggleStore = document.getElementById('toggle-store');
 
-    // Carregar o estado inicial do localStorage
-    const storeStatus = localStorage.getItem('storeStatus') === 'open';
-    toggleStore.checked = storeStatus;
+    // Carregar o estado inicial do backend
+    try {
+        const response = await fetch('https://online-store-backend-vw45.onrender.com/api/store-status');
+        const data = await response.json();
+        toggleStore.checked = data.status === 'open';
+    } catch (error) {
+        console.error('Erro ao carregar o estado inicial da loja:', error);
+    }
 
-    toggleStore.addEventListener('change', function() {
-        if (toggleStore.checked) {
-            localStorage.setItem('storeStatus', 'open');
-            openStore();
-        } else {
-            localStorage.setItem('storeStatus', 'closed');
-            closeStore();
+    toggleStore.addEventListener('change', async function() {
+        const newStatus = toggleStore.checked ? 'open' : 'closed';
+
+        try {
+            await fetch('https://online-store-backend-vw45.onrender.com/api/store-status', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ status: newStatus }),
+            });
+
+            if (newStatus === 'open') {
+                openStore();
+            } else {
+                closeStore();
+            }
+        } catch (error) {
+            console.error('Erro ao atualizar o estado da loja:', error);
         }
     });
 
     // Atualizar o estado da loja baseado no estado inicial
-    if (storeStatus) {
+    const storeStatus = toggleStore.checked ? 'open' : 'closed';
+    if (storeStatus === 'open') {
         openStore();
     } else {
         closeStore();
