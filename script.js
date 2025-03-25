@@ -3,11 +3,48 @@ document.addEventListener('DOMContentLoaded', async () => {
     await Promise.all([loadProducts(), loadCategories()]);
     hideLoading();
 
+    const toggleStore = document.getElementById('toggle-store');
+
+    // Carregar o estado inicial do localStorage
+    const storeStatus = localStorage.getItem('storeStatus') === 'open';
+    toggleStore.checked = storeStatus;
+
+    toggleStore.addEventListener('change', function() {
+        if (toggleStore.checked) {
+            localStorage.setItem('storeStatus', 'open');
+            openStore();
+        } else {
+            localStorage.setItem('storeStatus', 'closed');
+            closeStore();
+        }
+    });
+
+    // Atualizar o estado da loja baseado no estado inicial
+    if (storeStatus) {
+        openStore();
+    } else {
+        closeStore();
+    }
+
     document.getElementById('addProductForm').addEventListener('submit', async (event) => {
         event.preventDefault();
         await addProduct();
     });
 });
+
+function openStore() {
+    // Lógica para mostrar produtos
+    document.querySelectorAll('.product').forEach(product => {
+        product.style.display = 'block';
+    });
+}
+
+function closeStore() {
+    // Lógica para esconder produtos
+    document.querySelectorAll('.product').forEach(product => {
+        product.style.display = 'none';
+    });
+}
 
 let products = [];
 let categories = [];
