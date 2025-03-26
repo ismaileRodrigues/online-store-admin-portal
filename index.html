@@ -4,20 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portal Administrativo - Loja Online</title>
-   <link rel="stylesheet" href="style.css?v=10.0">
-
+    <link rel="stylesheet" href="style.css?v=10.0">
 </head>
 <body>
     <div id="loading" class="loading">Loading...</div>
-
-    <div class="container">
-        <h1>Portal Administrativo</h1>
-        <label for="toggle-store">Abrir/Fechar Loja</label>
-<input type="checkbox" id="toggle-store">
-        <div id="error" style="display:none; color:red; margin-top:10px;"></div>
-
-        <!-- Formulário para adicionar produtos -->
-        <div class="add-product-form">
+    
+    <main class="container">
+        <header>
+            <h1>Portal Administrativo</h1>
+        </header>
+        
+        <section>
+            <label for="toggle-store">Abrir/Fechar Loja</label>
+            <input type="checkbox" id="toggle-store">
+            <div id="error" style="display:none; color:red; margin-top:10px;"></div>
+        </section>
+        
+        <section>
             <h2>Adicionar Produto</h2>
             <form id="addProductForm" enctype="multipart/form-data">
                 <label for="productName">Nome do Produto:</label>
@@ -34,10 +37,9 @@
                 </select>
                 <button type="submit">Adicionar Produto</button>
             </form>
-        </div>
-
-        <!-- Formulário para gerenciar categorias -->
-        <div class="manage-categories-form">
+        </section>
+        
+        <section>
             <h2>Gerenciar Categorias</h2>
             <form id="manageCategoriesForm">
                 <label for="newCategoryName">Nova Categoria:</label>
@@ -45,10 +47,11 @@
                 <button type="button" onclick="addCategory()">Adicionar Categoria</button>
             </form>
             <div id="categoriesList"></div>
-        </div>
-
-        <div class="products" id="products"></div>
-    </div>
-  <script src="script.js?v=10.0"></script>
+        </section>
+        
+        <section class="products" id="products"></section>
+    </main>
+    
+    <script src="script.js?v=10.0"></script>
 </body>
 </html>
