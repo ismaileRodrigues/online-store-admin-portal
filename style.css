@@ -40,7 +40,47 @@ body {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+/* Estilo para o botão de abrir/fechar loja */
+#toggle-store {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 50px;
+    height: 25px;
+    background: #ccc;
+    border-radius: 25px;
+    position: relative;
+    outline: none;
+    cursor: pointer;
+    transition: background 0.3s;
+}
 
+#toggle-store:checked {
+    background: #4caf50;
+}
+
+#toggle-store::before {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 21px;
+    height: 21px;
+    background: white;
+    border-radius: 50%;
+    transition: transform 0.3s;
+}
+
+#toggle-store:checked::before {
+    transform: translateX(25px);
+}
+
+label[for="toggle-store"] {
+    display: inline-block;
+    margin-right: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+}
 .container {
     max-width: 800px;
     margin: 0 auto;
