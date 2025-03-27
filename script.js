@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.error('Erro ao carregar o estado inicial da loja:', error);
     }
 
+    // Listener para mudança de estado do checkbox
     toggleStore.addEventListener('change', async function() {
         console.log('onChange started');
         const newStatus = toggleStore.checked ? 'open' : 'closed';
@@ -56,6 +57,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 function openStore() {
+    console.log('Abrindo a loja'); // Log ao abrir a loja
     // Lógica para mostrar produtos
     document.querySelectorAll('.product').forEach(product => {
         product.style.display = 'block';
@@ -63,6 +65,7 @@ function openStore() {
 }
 
 function closeStore() {
+    console.log('Fechando a loja'); // Log ao fechar a loja
     // Lógica para esconder produtos
     document.querySelectorAll('.product').forEach(product => {
         product.style.display = 'none';
