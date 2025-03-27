@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     try {
         const response = await fetch('https://online-store-backend-vw45.onrender.com/api/store-status');
         const data = await response.json();
+        console.log('Estado inicial da loja:', data.status); // Log do estado inicial
         toggleStore.checked = data.status === 'open';
     } catch (error) {
         console.error('Erro ao carregar o estado inicial da loja:', error);
@@ -16,6 +17,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     toggleStore.addEventListener('change', async function() {
         const newStatus = toggleStore.checked ? 'open' : 'closed';
+        console.log('Mudança detectada. Novo estado:', newStatus); // Log da mudança
 
         try {
             await fetch('https://online-store-backend-vw45.onrender.com/api/store-status', {
@@ -38,6 +40,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Atualizar o estado da loja baseado no estado inicial
     const storeStatus = toggleStore.checked ? 'open' : 'closed';
+    console.log('Estado da loja baseado no estado inicial:', storeStatus); // Log do estado inicial baseado no checkbox
     if (storeStatus === 'open') {
         openStore();
     } else {
