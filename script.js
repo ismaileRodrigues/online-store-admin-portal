@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     toggleStore.addEventListener('change', async function() {
+        console.log('onChange started');
         const newStatus = toggleStore.checked ? 'open' : 'closed';
         console.log('Mudança detectada. Novo estado:', newStatus); // Log da mudança
 
@@ -36,6 +37,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         } catch (error) {
             console.error('Erro ao atualizar o estado da loja:', error);
         }
+        console.log('onChange completed');
     });
 
     // Atualizar o estado da loja baseado no estado inicial
